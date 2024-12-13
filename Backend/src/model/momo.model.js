@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 
-const momoSchema=new Schema({
+const momoSchema=new mongoose.Schema({
     name:{
         type:String,
         required:true
