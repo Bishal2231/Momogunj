@@ -5,7 +5,6 @@ import bodyParser from "body-parser"
 import { signup, verifyemail } from "./controller/auth.controller.js"
 import { login } from "./controller/auth.controller.js"
 import { logout } from "./controller/auth.controller.js"
-
 const app=express()
 
 
@@ -21,10 +20,10 @@ app.get("/",(req,res)=>{
 
 app.post("/signup",signup)
 
-app.post("./verify-email",verifyemail)
-app.get("/login",login)
+app.post("/verify-email",verifyemail)
+app.post("/login",login)
 
-app.get("/logout",logout)
+app.post("/logout",logout)
 
 
 app.post("/updateMomo",handleMomo)
