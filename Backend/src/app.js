@@ -2,7 +2,7 @@ import express from "express"
 import { handleMomo } from "./controller/momo.controller.js"
 import cookieParser from "cookie-parser"
 import bodyParser from "body-parser"
-import { signup } from "./controller/auth.controller.js"
+import { signup, verifyemail } from "./controller/auth.controller.js"
 import { login } from "./controller/auth.controller.js"
 import { logout } from "./controller/auth.controller.js"
 
@@ -19,8 +19,9 @@ app.get("/",(req,res)=>{
     res.send("working")
 })
 
-app.get("/signup",signup)
+app.post("/signup",signup)
 
+app.post("./verify-email",verifyemail)
 app.get("/login",login)
 
 app.get("/logout",logout)
