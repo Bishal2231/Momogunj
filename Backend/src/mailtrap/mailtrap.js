@@ -20,7 +20,7 @@ export const sender = {
 
 
 
-// client
+// mailtrapClient
 //   .send({
 //     from: sender,
 //     to: recipients,
