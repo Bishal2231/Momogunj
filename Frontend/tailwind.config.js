@@ -5,7 +5,10 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backdropBlur: {
+      'extra-sm': '2px', // Custom blur level, slightly more than none, but less than sm
+    },},
   },
   plugins: [],
 }
