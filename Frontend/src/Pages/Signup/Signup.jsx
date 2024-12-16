@@ -1,24 +1,35 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { userAuthStore } from '../../Store/authStore';
+import { Loader} from "lucide-react";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    password: ''
+    password: '',
   });
+  const { signup, error, isLoading } = userAuthStore();
+  const navigate = useNavigate(); // Initialize the useNavigate hook
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your form submission logic here
-    console.log(formData);
+    const { name, email, password } = formData;
+
+    try {
+      await signup(email, password, name);
+      navigate('/verify-email'); // Use navigate for redirection
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -57,18 +68,24 @@ const Signup = () => {
               placeholder="*****"
               required
             />
+            {error && <p className="text-red-500">{error}</p>}
             <button
               type="submit"
+              disabled={isLoading}
               className="text-xl text-white rounded-[20px] bg-orange-500 w-full sm:w-[220px] p-3 self-center mt-8"
             >
-              Sign Up
+              {isLoading ? (
+                <Loader className="animate-spin mx-auto" />
+              ) : (
+                'Sign Up'
+              )}
             </button>
           </form>
           <p className="text-center">
             Already have an account?{' '}
-            <a href="/login" className="text-orange-500">
+            <Link to="/login" className="text-orange-500">
               LOGIN
-            </a>
+            </Link>
           </p>
         </div>
       </div>

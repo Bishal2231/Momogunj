@@ -31,11 +31,17 @@ const recipient=[{email}]
         const response = await mailtrapClient.send({
 			from: sender,
 			to: recipient,
-			template_uuid: "e65925d1-a9d1-4a40-ae7c-d92b37d593df",
-			template_variables: {
-				company_info_name: "Auth Company",
-				name: name,
-			},
+			// template_uuid: "e65925d1-a9d1-4a40-ae7c-d92b37d593df",
+			// template_variables: {
+			// 	company_info_name: "Auth Company",
+			// 	name: name,
+			// },
+            template_uuid:"3b922411-a47b-410b-a0b7-063fee3d712e",
+            template_variables: {
+                "company_info_name": "Momogunj",
+                "name": name
+              }
+
 		});
         console.log("welcome email send successfullty",response)
     } catch (error) {

@@ -1,9 +1,12 @@
 import React, { useState, useRef } from "react";
-
-const ConformationPage = () => {
-  const [code, setCode] = useState(["", "", "", ""]); // Stores individual digits of the code
+import { Link, useNavigate } from "react-router-dom";
+import { userAuthStore } from "../../Store/authStore";
+import toast from "react-hot-toast";
+const VerifyOTP =()=>{
+  const [code, setCode] = useState(["", "", "", "","",""]); // Stores individual digits of the code
   const [isCodeSent, setIsCodeSent] = useState(false); // State to track if the code is sent
-
+const navigate=useNavigate()
+  const {error,isLoading,verifyEmail}=userAuthStore()
   // Refs for each input field to manage focus
   const inputRefs = useRef([]);
 
@@ -25,18 +28,31 @@ const ConformationPage = () => {
   };
 
   // Handle Send Code button click
-  const handleSendCode = () => {
+  const handleSendCode = async(e) => {
+    e.preventDefault()
     // You can perform the logic to send the code here
     setIsCodeSent(true); // Mark the code as sent
-    alert("Code sent successfully!"); // For example, show an alert
+    console.log(code)
+    const verificationCode=code.join('')
+   
+    try {
+      await verifyEmail(verificationCode)
+      toast.success("email verfy successful")
+
+      navigate("/")
+    } catch (error) {
+      console.log(error)
+      throw error;
+    }
+
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-        <h2 className="text-xl font-semibold text-center mb-6">Enter Verification Code</h2>
-
-        <div className="flex justify-between mb-4">
+    <div className="flex justify-center items-center h-screen   bg-[url('/images/phonesignup.png')] sm:bg-[url('/images/tabsignup.png')] md:bg-[url('/images/pcsignup.png')]">
+      <div className=" rounded-lg shadow-lg w-96 p-[40px]  m-[20px] backdrop-blur-sm border-4 border-orange-500">
+        <h2 className="text-3xl font-bold text-center mb-6 	" >Verification Code</h2>
+      <p className="text-slate-500"> Please type the verification code sent to your gmail</p>
+        <div className="flex justify-between mb-4 mt-[4vh]">
           {code.map((digit, index) => (
             <input
               key={index}
@@ -52,16 +68,19 @@ const ConformationPage = () => {
         </div>
 
         <div className="text-center">
+          {error && <p className="text-red-500 mt-2">{error}</p>
+          }
           <button
             onClick={handleSendCode}
-            className="w-full py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+            className="w-full py-2 mt-4 text-white bg-orange-500 rounded-lg hover:bg-blue-600"
           >
             {isCodeSent ? "Code Sent" : "Send Code"}
           </button>
+          <p className="text-slate-400 mt-[3vh] text-nowrap"> i don't receive a code! <Link to="#" className="text-orange-500"> Please resend</Link> </p>
         </div>
       </div>
     </div>
   );
 };
 
-export default ConformationPage;
+export default VerifyOTP;
