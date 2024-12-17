@@ -1,5 +1,7 @@
 import {create} from "zustand"
 import axios from "axios"
+axios.defaults.withCredentials = true;
+
 const API_URL="http://localhost:3000"
 export const userAuthStore=create((set)=>({
     user:null,
@@ -40,6 +42,25 @@ export const userAuthStore=create((set)=>({
    set({error:null,isCheckingAuth:false,isAuthenticated:false})    }
 
 
+    },
+    login:async(email,password)=>{
+        set({isLoading:true,error:null})
+    try {
+        const response=await axios.post(`${API_URL}/login`,{email,password})
+        console.log("response",response)
+        set({
+            isAuthenticated:true,
+            user:response.data.user,
+            error:null,
+            isLoading:false
+        })
+
+    } catch (error) {
+        set({error:error.response?.data?.message || "error logging in",isLoading:false})
+        throw error
+    }
+    
+    
     }
 
 }))

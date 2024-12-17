@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { userAuthStore } from '../../Store/authStore';
+import { Mail, Lock, Loader } from "lucide-react";
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
-
+  const {login,isLoading,error}=userAuthStore();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -14,11 +16,12 @@ const Login = () => {
       [name]: value
     });
   };
-
-  const handleSubmit = (e) => {
+// const {isLoading}=false;
+  const handleSubmit = async(e) => {
     e.preventDefault();
     // Handle login logic here, such as sending the data to the backend
     console.log(formData);
+    await login(formData.email,formData.password)
   };
 
   return (
@@ -48,11 +51,12 @@ const Login = () => {
               required
             />
             <a href="#" className="text-center text-orange-500 mt-[18px] text-nowrap">Forgot password?</a>
+            {error && <p className="text-red-500 mb-2">{error}</p>}
             <button
               type="submit"
               className="text-xl text-white rounded-[20px] bg-orange-500 w-full sm:w-[220px] p-3 self-center mt-2"
-            >
-              Log In
+           disabled={isLoading} > {isLoading ? <Loader className='w-6 h-6 animate-spin  mx-auto' /> : "Login"}
+              
             </button>
           </form>
           <p className="text-center">

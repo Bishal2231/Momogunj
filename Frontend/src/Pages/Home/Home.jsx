@@ -1,7 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import { userAuthStore } from '../../Store/authStore';
 
-const Home = ({user}) => {
+const Home = () => {
+
+ const {user}=userAuthStore()
+
   return (
     <div className='bg-red-100'>
     <h1>hello {user?user.name:"world"}  </h1>

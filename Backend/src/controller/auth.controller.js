@@ -139,11 +139,12 @@ return res.status(200).json({success:true,message:"reset email sent"})
     
 
 }
-export const login=async (req,res)=>{
+export const login=async(req,res)=>{
 
 const {email,password}=req.body
+console.log(req.body)
 try {
-    const user=findOne({email})
+    const user=await User.findOne({email})
     
     if(!user){
         return res.status(400).json({success:false,message:"user doesnot exits"})
@@ -154,9 +155,11 @@ try {
     
     }
     generateTokenAndSetCookie(res,user._id)
-    user.lastlogin=new Date;
+    user.lastLogin=new Date;
     await user.save()
-    return res.status(200).json({success:true,message:"login successfull"})
+    return res.status(200).json({success:true,message:"login successfull",user:{
+        ...user._doc,password:undefined
+    }})
     
     
     

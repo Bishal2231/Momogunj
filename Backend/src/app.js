@@ -11,7 +11,7 @@ import cors from "cors"
 const app=express()
 
 app.use(cors({
-    origin:"http://localhost:5173",credentials:true
+    origin:"http://localhost:5173",credentials:true,
 }))
 app.use(cookieParser())
 app.use(express.json())
@@ -39,6 +39,15 @@ app.post("/updateMomo",handleMomo)
 
    
 
+app.get("/test-cookie", (req, res) => {
+    res.cookie("test", "cookieTestValue", {
+        httpOnly: true,
+        secure: false, // Change to true in production
+        sameSite: "lax",
+        maxAge: 1000 * 60 * 60, // 1 hour
+    });
+    res.send("Cookie set successfully!");
+});
 
 
 
