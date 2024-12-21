@@ -25,7 +25,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center w-screen bg-white items-center h-screen bg-[url('/images/phonesignup.png')] sm:bg-[url('/images/tabsignup.png')] md:bg-[url('/images/pcsignup.png')]">
+    <div className="flex justify-center w-screen bg-white items-center h-screen bg-[url('/images/wallpaper
+    /phonesignup.png')] sm:bg-[url('/images/wallpaper/tabsignup.png')] md:bg-[url('/images/wallpaper/pcsignup.png')]">
       <div className="mainContainer flex flex-col w-[90vw] m-[10px] backdrop-blur-sm border-4 border-orange-500 p-[20px] rounded-[15px] md:w-[80vw] md:p-[50px]">
         <h2 className="text-black font-bold text-4xl">Login</h2>
         <div>
@@ -50,7 +51,7 @@ const Login = () => {
               placeholder="*****"
               required
             />
-            <a href="#" className="text-center text-orange-500 mt-[18px] text-nowrap">Forgot password?</a>
+            <Link to="/forget-password" className="text-center text-orange-500 mt-[18px] text-nowrap">Forgot password?</Link>
             {error && <p className="text-red-500 mb-2">{error}</p>}
             <button
               type="submit"

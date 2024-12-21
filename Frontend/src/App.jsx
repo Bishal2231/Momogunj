@@ -10,6 +10,8 @@ import { userAuthStore  } from './Store/authStore'
 import { useNavigate } from 'react-router-dom'
 import { Navigate } from 'react-router-dom'
 import LoadingSpinner from './Pages/Components/LoadingSpinner'
+import ItemsDetail from './Pages/ItemsDetail/ItemsDetails'
+import BuyItemsPage from './Pages/BuyItemsPage/BuyItemsPage'
 
 
 
@@ -27,6 +29,7 @@ const ProtectedRoute=({children})=>{
 }
 
 
+
 // redirect authenticed user to route page
 const RedirectAutheticatedUser=({children})=>{
   const {isAuthenticated,user}=userAuthStore()
@@ -37,7 +40,76 @@ console.log(user)
   return children
 }
 
+const chowminArr=[{
+  name: "  chowmin",
+  image: "/images/items/chowmin.jpg",
+  subTags: ["chowmin", "veggies", "Fast Food"],
+  rating: "5 (99+)",
+  estimatedTime: "30-45 mins",
+  type:"veg"
+},{
+  name: " chicken chowmin",
+  image: "/images/items/nonvegChowmin.jpg",
+  subTags: ["chowmin3", "veggies", "Fast Food"],
+  rating: "5 (99+)",
+  estimatedTime: "30-45 mins",
+  type:"non-veg"
+}]
+const momoArr=[{
+  name: " Steam Momo",
+  image: "/images/items/momoom.jpg",
+  subTags: ["steam", "veggies", "Fast Food"],
+  rating: "5 (99+)",
+  estimatedTime: "30-45 mins",
+  type:"veg",
+  id:"123"
+},{
+  name: "Fried momo",
+  image: "/images/items/FriedMomo.jpg",
+  subTags: ["fried", "crispy", "Fast Food"],
+  rating: "5 (99+)",
+  estimatedTime: "30-45 mins",
+  type:"veg",
+  id:"234"
 
+}]
+const SoftDrinkArr=[{
+  name: "pepsi",
+  image: "/images/items/pepsi.jpg",
+  subTags: ["cool", "sweet"],
+  rating: "5 (99+)",
+  estimatedTime: "15-20 mins",
+type:"cold drink"},{
+  name: "coca cola ",
+  image: "/images/items/cocacola.jpg",
+  subTags: ["dew", "daring", "coool"],
+  rating: "5 (99+)",
+  estimatedTime: "15-20 mins",
+  type:"cold drink"
+}
+]
+
+const MomoData={
+  name:"MoMo",
+  rating:"5",
+  price:300,
+  description:"very tasty MoMo to enjoy your day",
+  backgroundImage:"/images/items/momoom.jpg",
+  altImg:"momo IMG",
+  type:"non-veg",
+  drink:false
+}
+const ChowmeinData={
+  name:"Chowmien",
+  rating:"5",
+  price:300,
+  description:"very tasty Chowmien to enjoy your day ,try it with some extra sauce",
+  backgroundImage:"/images/items/chowmin.jpg",
+  type:"veg",
+  drink:false,
+  altImg:"Chowmien IMG",
+
+}
 const App = () => {
   
   
@@ -83,6 +155,17 @@ const App = () => {
 
   
   }/>  
+<Route path="/ItemsDetail/Momo" element={<ItemsDetail section={"Momo"}
+itemArr={momoArr} />}/>
+<Route path="/ItemsDetail/Chowmein" element={<ItemsDetail 
+section={"Chowmein"} 
+itemArr={chowminArr} />}/>
+<Route path="/ItemsDetail/SoftDrinks" 
+element={<ItemsDetail section={"Soft drink"} itemArr={SoftDrinkArr}/>}/>
+
+<Route path="/Items/Purchase/Momo" element={<BuyItemsPage itemDetail={MomoData} />}/>
+<Route path="/Items/Purchase/Chowmein" element={<BuyItemsPage itemDetail={ChowmeinData} />}/>
+
 <Route path="/forget-password" element={<ForgotPass/>}/>
     </Routes>
     <Toaster/>

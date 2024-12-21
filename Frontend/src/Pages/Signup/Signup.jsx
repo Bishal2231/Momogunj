@@ -1,39 +1,50 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { Link, useNavigate } from 'react-router-dom';
 import { userAuthStore } from '../../Store/authStore';
-import { Loader} from "lucide-react";
+import { Loader } from 'lucide-react';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
+    avatar: null, // Ensure avatar is initialized as null
   });
+
   const { signup, error, isLoading } = userAuthStore();
-  const navigate = useNavigate(); // Initialize the useNavigate hook
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+    const { name, value, files } = e.target;
 
+    // Handle file input separately
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === 'avatar' ? files[0] : value,
+    }));
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, email, password } = formData;
-
+  
+    const { name, email, password, avatar } = formData;
+  
+    const data = new FormData();
+    data.append('name', name);
+    data.append('email', email);
+    data.append('password', password);
+    if (avatar) data.append('avatar', avatar);
+  
     try {
-      await signup(email, password, name);
-      navigate('/verify-email'); // Use navigate for redirection
+      await signup(data); // FormData passed directly
+      navigate('/verify-email');
     } catch (err) {
       console.error(err);
     }
   };
+  
 
   return (
-    <div className="flex justify-center w-screen bg-white items-center h-screen bg-[url('/images/phonesignup.png')] sm:bg-[url('/images/tabsignup.png')] md:bg-[url('/images/pcsignup.png')]">
+    <div className="flex justify-center w-screen bg-white items-center h-screen bg-[url('/images/wallpaper/phonesignup.png')] sm:bg-[url('/images/wallpaper/tabsignup.png')] md:bg-[url('/images/wallpaper/pcsignup.png')]">
       <div className="mainContainer flex flex-col w-[90vw] m-[10px] backdrop-blur-sm border-4 border-orange-500 p-[20px] rounded-[15px] md:w-[80vw] md:p-[50px]">
         <h2 className="text-black font-bold text-4xl">Sign Up</h2>
         <div>
@@ -57,6 +68,14 @@ const Signup = () => {
               className="border-2 border-black transition duration-300 ease-in-out hover:border-orange-500 p-1 rounded-md text-xl"
               placeholder="****@gmail.com"
               required
+            />
+            <span className="text-slate-500 text-md mt-4">Avatar</span>
+            <input
+              type="file"
+              name="avatar"
+              accept="image/*"
+              onChange={handleChange}
+              className="border-2 border-black transition duration-300 ease-in-out hover:border-orange-500 p-1 rounded-md text-xl"
             />
             <span className="text-slate-500 text-md mt-4">Password</span>
             <input

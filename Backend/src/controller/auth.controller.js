@@ -8,19 +8,28 @@ import { sendVerificationEmail } from "../mailtrap/email.js"
  import { generateTokenAndSetCookie } from "../utility/generateTokenAndSetCookie.js"
  import { sendPasswordResetEmail } from "../mailtrap/email.js"
  import { sentResetSuccessEmail } from "../mailtrap/email.js"
+ import uploadImage from "../utility/cloudinary.js"
  export const signup=async (req,res)=>{
     try {
+        const avatarlocalpath=req.file?.path
     const {email,password,name}=req.body
-
-    if(!email||!password||!password){
-        throw new Error("invalid email")
+        console.log(avatarlocalpath)
+    if(!avatarlocalpath){
+        return res.status(400).json({success:false,messege:"no avaatr found"})    
     }
+    if(!email||!password||!password){
+        return res.status(400).json({success:false,messege:"einvalid email"})    }
+    
 
     const userAlreadyExits=await User.findOne({email})
 
     if(userAlreadyExits){
         return res.status(400).json({success:false,message:"user already exits"})
     }
+    const avatar=await uploadImage(avatarlocalpath)
+    if(!avatar.url){
+        // throw new Error(400, "Error while uploading on avatar")
+        return res.status(400).json({success:false,messege:"error while uploading avaatr"})    }
     const hashPassword=await bcryptjs.hash(password,10)
 
      const verificationToken=  generateVerificationCOde()
@@ -30,6 +39,7 @@ import { sendVerificationEmail } from "../mailtrap/email.js"
         password:hashPassword,
         name,
         verificationToken,
+        avatar:avatar.url,
         verificationTokenExpiresAt:Date.now()+24*60*60*1000
     
     
