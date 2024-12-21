@@ -79,10 +79,10 @@ const ItemsDetail = ({section,itemArr}) => {
       {
         itemArr.map((data,index)=>(
           <div key={index}>
-            <Link to={`/Items/Purchase/${data.id}`}>   
+            <Link to={`/Items/Purchase/${data.foodLink}/${data.id}`}>   
           <ItemCard       
          name={data.name}
-       image={data.image}
+       image={data.backgroundImage}
        subTags={data.subTags}
        rating={data.rating}
        estimatedTime={data.estimatedTime}

@@ -42,74 +42,99 @@ console.log(user)
 
 const chowminArr=[{
   name: "  chowmin",
-  image: "/images/items/chowmin.jpg",
+  backgroundImage: "/images/items/chowmin.jpg",
   subTags: ["chowmin", "veggies", "Fast Food"],
-  rating: "5 (99+)",
+  rating: "4 (99+)",
   estimatedTime: "30-45 mins",
-  type:"veg"
+  type:"veg",
+  id:1,
+  foodLink:"chowmein"
+
 },{
   name: " chicken chowmin",
-  image: "/images/items/nonvegChowmin.jpg",
+  backgroundImage: "/images/items/nonvegChowmin.jpg",
   subTags: ["chowmin3", "veggies", "Fast Food"],
   rating: "5 (99+)",
   estimatedTime: "30-45 mins",
-  type:"non-veg"
+  type:"non-veg",
+  id:2,
+  foodLink:"chowmein"
+
 }]
 const momoArr=[{
   name: " Steam Momo",
-  image: "/images/items/momoom.jpg",
+  backgroundImage: "/images/items/momoom.jpg",
   subTags: ["steam", "veggies", "Fast Food"],
   rating: "5 (99+)",
   estimatedTime: "30-45 mins",
   type:"veg",
-  id:"123"
+  id:"1",
+  price:300,
+  foodLink:"momo"
+  
 },{
   name: "Fried momo",
-  image: "/images/items/FriedMomo.jpg",
+  backgroundImage: "/images/items/FriedMomo.jpg",
   subTags: ["fried", "crispy", "Fast Food"],
   rating: "5 (99+)",
   estimatedTime: "30-45 mins",
   type:"veg",
-  id:"234"
+  id:"2",
+  price:300,
+  foodLink:"momo",
+  
+
+
 
 }]
-const SoftDrinkArr=[{
-  name: "pepsi",
-  image: "/images/items/pepsi.jpg",
-  subTags: ["cool", "sweet"],
-  rating: "5 (99+)",
-  estimatedTime: "15-20 mins",
-type:"cold drink"},{
-  name: "coca cola ",
-  image: "/images/items/cocacola.jpg",
-  subTags: ["dew", "daring", "coool"],
-  rating: "5 (99+)",
-  estimatedTime: "15-20 mins",
-  type:"cold drink"
-}
-]
+const SoftDrinkArr = [
+  {
+    name: "Pepsi",
+    backgroundImage: "/images/items/pepsi.jpg",
+    subTags: ["cool", "sweet"],
+    rating: "5 (99+)",
+    estimatedTime: "15-20 mins",
+    type: "cold drink",
+    id: 1,
+    foodLink: "softdrink",
+    price:300,
 
-const MomoData={
-  name:"MoMo",
-  rating:"5",
-  price:300,
-  description:"very tasty MoMo to enjoy your day",
-  backgroundImage:"/images/items/momoom.jpg",
-  altImg:"momo IMG",
-  type:"non-veg",
-  drink:false
-}
-const ChowmeinData={
-  name:"Chowmien",
-  rating:"5",
-  price:300,
-  description:"very tasty Chowmien to enjoy your day ,try it with some extra sauce",
-  backgroundImage:"/images/items/chowmin.jpg",
-  type:"veg",
-  drink:false,
-  altImg:"Chowmien IMG",
+  },
+  {
+    name: "Coca Cola",
+    backgroundImage: "/images/items/cocacola.jpg",
+    subTags: ["dew", "daring", "cool"],
+    rating: "5 (99+)",
+    estimatedTime: "15-20 mins",
+    type: "cold drink",
+    id: 2,
+    foodLink: "softdrink",
+    price:300,
 
-}
+  }
+];
+
+// const MomoData={
+//   name:"MoMo",
+//   rating:"5",
+//   price:300,
+//   description:"very tasty MoMo to enjoy your day",
+//   backgroundImage:"/images/items/momoom.jpg",
+//   altImg:"momo IMG",
+//   type:"non-veg",
+//   drink:false
+// }
+// const ChowmeinData={
+//   name:"Chowmien",
+//   rating:"5",
+//   price:300,
+//   description:"very tasty Chowmien to enjoy your day ,try it with some extra sauce",
+//   backgroundImage:"/images/items/chowmin.jpg",
+//   type:"veg",
+//   drink:false,
+//   altImg:"Chowmien IMG",
+
+// }
 const App = () => {
   
   
@@ -155,16 +180,15 @@ const App = () => {
 
   
   }/>  
-<Route path="/ItemsDetail/Momo" element={<ItemsDetail section={"Momo"}
-itemArr={momoArr} />}/>
-<Route path="/ItemsDetail/Chowmein" element={<ItemsDetail 
-section={"Chowmein"} 
-itemArr={chowminArr} />}/>
-<Route path="/ItemsDetail/SoftDrinks" 
-element={<ItemsDetail section={"Soft drink"} itemArr={SoftDrinkArr}/>}/>
+<Route path="/ItemsDetail/momo-list" element={<ItemsDetail section={"Momo"} itemArr={momoArr} />}/>
+<Route path="/ItemsDetail/chowmein-list" element={<ItemsDetail  section={"Chowmein"} itemArr={chowminArr} />}/>
+<Route path="/ItemsDetail/softdrinks-list" element={<ItemsDetail section={"Soft drink"} itemArr={SoftDrinkArr}/>}/>
 
-<Route path="/Items/Purchase/Momo" element={<BuyItemsPage itemDetail={MomoData} />}/>
-<Route path="/Items/Purchase/Chowmein" element={<BuyItemsPage itemDetail={ChowmeinData} />}/>
+<Route path="/Items/Purchase/momo/:id" element={<BuyItemsPage itemDetails={momoArr} />}/>
+<Route path="/Items/Purchase/chowmein/:id" element={<BuyItemsPage itemDetails={chowminArr} />}/>
+{/* <Route path="/Item/Purchase/:item" element={<BuyItemsPage itemDetail={ChowmeinData} />}/> */}
+<Route path="/Items/Purchase/softdrink/:id" element={<BuyItemsPage itemDetails={SoftDrinkArr} />}/>
+
 
 <Route path="/forget-password" element={<ForgotPass/>}/>
     </Routes>

@@ -16,7 +16,7 @@ const Home = () => {
       <section className="p-4 mb-3">
         <h2 className="text-lg font-semibold">Popular Items</h2>
         <div className="flex gap-4 overflow-x-auto mt-2">
-          <Link to="/Items/Purchase/Chowmein">
+          <Link to="/Items/Purchase/chowmein/1">
           <div className="bg-white rounded-lg shadow-md min-w-[200px] overflow-hidden">
             <img
               src="images/items/bowl-noodles-with-bell-peppers-chopstick-wooden-desk.jpg"
@@ -31,7 +31,7 @@ const Home = () => {
             </div>
           </div>
           </Link>
-          <Link to="/Items/Purchase/Momo">
+          <Link to="/Items/Purchase/momo/1">
 
           <div className="bg-white rounded-lg shadow-md min-w-[200px] overflow-hidden">
             <img
@@ -58,7 +58,7 @@ const Home = () => {
           </a>
         </div>
         <div className="flex flex-wrap gap-4 mt-3">
-          <Link to="/ItemsDetail/MOmO">
+          <Link to="/ItemsDetail/momo-list">
           <div className="relative overflow-hidden rounded-lg bg-white flex-1 flex-grow">
             <img
               src="images/items/dumplings-plastic-container-sauce.jpg"
@@ -70,7 +70,7 @@ const Home = () => {
             </div>
           </div>
           </Link>
-          <Link to="/ItemsDetail/Chowmein">   
+          <Link to="/ItemsDetail/chowmein-list">   
           <div className="relative overflow-hidden rounded-lg bg-white flex-1 flex-grow">
             <img
               src="images/items/bowl-noodles-with-bell-peppers-chopstick-wooden-desk.jpg"
@@ -82,7 +82,7 @@ const Home = () => {
             </div>
           </div>
           </Link>
-          <Link to="/ItemsDetail/SoftDrinks">
+          <Link to="/ItemsDetail/softdrinks-list">
           <div className="relative overflow-hidden rounded-lg bg-white flex-1 flex-grow">
             <img
               src="images/items/istockphoto-472699172-612x612.jpg"

@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { FaStar } from "react-icons/fa";
 import { CiCircleCheck } from "react-icons/ci";
-const BuyItemsPage = ({itemDetail}) => {
+const BuyItemsPage = ({itemDetails}) => {
+  const {id}=useParams()
 
+
+  const itemDetail=itemDetails.find((data)=>data.id.toString()===id)
+  if (!itemDetail) {
+    // If the food item is not found, display a "not found" message
+    return <div>Food item not found!</div>;
+  }
   const [totalPrice,setTotalPrice]=useState()
   const [Price,setPrice]=useState()
 
@@ -20,6 +28,7 @@ const chutniPrice=20;
   }
   const extraSoup=()=>{
     Setsoup(!soup)
+    console.log(id)//remove aafter use
   }
   const extraChutney=()=>{
     Setchutni(!chutni)
