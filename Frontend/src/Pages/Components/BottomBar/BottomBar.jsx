@@ -1,12 +1,15 @@
-import React from 'react'
+// import React from 'react'
 
-const BottomBar = () => {
-  return (
-    <> <li>Home</li>
-    <li>About</li>
-    <li>Services</li>
-    <li>Contact</li></>
-  )
-}
+// const BottomBar = () => {
+//   return (
+//     <> <li>Home</li>
+//     <li>About</li>
+//     <li>Service</li>
+//     <li>Contact</li>
+//     <li>Log out</li>
+    
+//     </>
+//   )
+// }
 
-export default BottomBar
+// export default BottomBar

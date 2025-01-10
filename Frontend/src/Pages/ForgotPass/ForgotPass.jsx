@@ -1,19 +1,28 @@
 import React from 'react'
 import { useState } from 'react'
+import { userAuthStore } from '../../Store/authStore'
+import { useNavigate } from "react-router-dom";
+
 
 const ForgotPass = () => {
 
 const [email,Setemail]=useState('')
-
+const [isSubmitted,setIsSubmitted]=useState(false)
+const {forgotPassword}=userAuthStore()
+const navigate = useNavigate();
 
 const emailUpdate=(e)=>{
 
   Setemail(e.target.value)
 
 }
-  const handleSubmit=(e)=>{
+  const handleSubmit=async(e)=>{
     e.preventDefault();
+
+   await forgotPassword(email)
     console.log('email submitted',email)
+    setIsSubmitted(true)
+
   }
   return (
 <div className="flex flex-col justify-center items-center h-screen w-screen  bg-[url('/images/wallpaper/phonesignup.png')] sm:bg-[url('/images/wallpaper/tabsignup.png')] md:bg-[url('/images/wallpaper/pcsignup.png')]">

@@ -2,21 +2,34 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FaStar } from "react-icons/fa";
 import { CiCircleCheck } from "react-icons/ci";
-const BuyItemsPage = ({itemDetails}) => {
-  const {id}=useParams()
+import FinalDes from './FinalDes.jsx/FinalDes';
+import { userAuthStore } from '../../Store/authStore';
 
 
-  const itemDetail=itemDetails.find((data)=>data.id.toString()===id)
-  if (!itemDetail) {
-    // If the food item is not found, display a "not found" message
-    return <div>Food item not found!</div>;
+
+const BuyItemsPage = () => {
+  const {id,foodLink}=useParams()
+const [itemDetail,SetitemDetail]=useState({})
+const {getitemDetails} = userAuthStore()
+const [addToCart,SetaddToCart]=useState({})
+useEffect(()=>{
+  const data =async()=> { 
+    const response=await getitemDetails(id,foodLink)
+    console.log("response",response.data)
+    SetitemDetail(response.data)
   }
-  const [totalPrice,setTotalPrice]=useState()
+  data();
+},[getitemDetails])
+
+
+
+  const [totalPrice,setTotalPrice]=useState(0)
   const [Price,setPrice]=useState()
 
   const [noItems,SetnoItems]=useState(1)
   const [soup,Setsoup]=useState(false)
   const [chutni,Setchutni]=useState(false)
+  const [finalDesPage,SetFinalDesPage]=useState(false)
 const soupPrice=20;
 const chutniPrice=20;
   const increseNoItems=()=>{
@@ -33,26 +46,52 @@ const chutniPrice=20;
   const extraChutney=()=>{
     Setchutni(!chutni)
   }
- 
+ const onClose=()=>{
+  SetFinalDesPage(!finalDesPage)
+ }
 
-    useEffect(()=>{
-   const   TOTALPRICE=itemDetail.price* noItems+soup*soupPrice+chutni*chutniPrice
-   console.log(TOTALPRICE)
-    })
+  //   useEffect(()=>{
+  //  const   TOTALPRICE=itemDetail.price* noItems+soup*soupPrice+chutni*chutniPrice
+  //  console.log(TOTALPRICE)
+  //   })
+  useEffect(() => {
+    
+    const TOTALPRICE =
+      itemDetail.price * noItems +
+      (soup ? soupPrice : 0) +
+      (chutni ? chutniPrice : 0);
+    setTotalPrice(TOTALPRICE);
+    console.log("Calculated Total Price:", TOTALPRICE); // Use this for debugging
+  }, [itemDetail.price, noItems, soup, chutni]);
   
+  const handleAddToCart = () => {
+    // Add item to cart
+    SetaddToCart({
+      id: itemDetail._id,
+      name: itemDetail.name,
+      price:  totalPrice,
+      quantity: noItems,
+      soup: soup,
+      chutni: chutni,
+totalPrice:totalPrice    });
+
+  }
+  console.log("Added to cart:", addToCart); // Use this for debugging
+
   return (
-    <div className="p-5">
+    <div className="p-5 relative ">
+     { finalDesPage && <FinalDes className="absolute " itemDetail=
+{itemDetail} onClose={onClose} noItems={noItems} totalPrice={totalPrice}   soup={soup} chutni={chutni}/>   } 
       <div className="relative rounded-lg overflow-hidden mb-5">
         <img
           src={itemDetail.backgroundImage}
-          alt={itemDetail.altImg}
+          alt={itemDetail.backgroundImage}
           className="w-full h-40 object-cover rounded-lg shadow-lg"
         />
         <div className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 cursor-pointer">
           <i className="fas fa-heart"></i>
         </div>
       </div>
-
       <div className="text-left mb-5">
         <h2 className="text-xl font-semibold text-gray-800">{itemDetail.name}:<span>{itemDetail.type} </span> </h2>
         <div className="flex items-center text-yellow-500 text-sm my-2">
@@ -122,8 +161,8 @@ const chutniPrice=20;
       </div>
 
       <div className="flex justify-between mt-8 space-x-4">
-        <button   className="flex-1 py-2 bg-yellow-500 text-white text-lg font-bold rounded-lg">Add to Cart</button>
-        <button className="flex-1 py-2 bg-red-600 text-white text-lg font-bold rounded-lg">Place Order</button>
+        <button onClick={()=>handleAddToCart()}  className="flex-1 py-2 bg-yellow-500 text-white text-lg font-bold rounded-lg">Add to Cart</button>
+        <button onClick={onClose} className="flex-1 py-2 bg-red-600 text-white text-lg font-bold rounded-lg">Place Order</button>
       </div>
     </div>
   );

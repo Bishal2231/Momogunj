@@ -58,7 +58,7 @@ const Home = () => {
           </a>
         </div>
         <div className="flex flex-wrap gap-4 mt-3">
-          <Link to="/ItemsDetail/momo-list">
+          <Link to="/ItemsDetail/momo">
           <div className="relative overflow-hidden rounded-lg bg-white flex-1 flex-grow">
             <img
               src="images/items/dumplings-plastic-container-sauce.jpg"
@@ -70,7 +70,7 @@ const Home = () => {
             </div>
           </div>
           </Link>
-          <Link to="/ItemsDetail/chowmein-list">   
+          <Link to="/ItemsDetail/chowmein">   
           <div className="relative overflow-hidden rounded-lg bg-white flex-1 flex-grow">
             <img
               src="images/items/bowl-noodles-with-bell-peppers-chopstick-wooden-desk.jpg"
@@ -82,7 +82,7 @@ const Home = () => {
             </div>
           </div>
           </Link>
-          <Link to="/ItemsDetail/softdrinks-list">
+          <Link to="/ItemsDetail/softdrinks">
           <div className="relative overflow-hidden rounded-lg bg-white flex-1 flex-grow">
             <img
               src="images/items/istockphoto-472699172-612x612.jpg"
@@ -96,27 +96,13 @@ const Home = () => {
           </Link>
         </div>
         
-      </section>
+      </section>  
 
-      //     <h1>hello {user?user.name:"world"}  </h1>
-
-     <h1> working home route </h1>     <br></br>
-   <br></br>
-     <br></br><br></br><br></br>
-   <Link to="/signup">signup</Link><br></br>
-    <br></br>
-     <br></br>
-   <br></br>
-   <Link to="/login">
-
-
-   LOGIN</Link><br></br>
-   <br></br>
-   <br></br>
-   <br></br>
+  
    <Link to="/verify-OTP">verify OTP</Link><br></br> <br></br><br></br>
+   <Link to="/user-cart">user cart</Link><br></br> <br></br><br></br>
 
-   <Link to="/forget-password">    forget-password
+   <Link to="/forgot-password">    forget-password
 </Link><br></br>
     </div>
   );

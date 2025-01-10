@@ -235,3 +235,8 @@ export const checkAuth=async(req,res)=>{
     }
 
 }
+
+export const addToCart=async(req,res)=>{
+    console.log(req.body)
+    console.log("working guys")
+}

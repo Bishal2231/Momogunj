@@ -1,99 +1,87 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ItemCard from "./Items-card/ItemsCard";
 import Navbar from "../Components/Navbar/Navbar";
 import { Link } from "react-router-dom";
-// import { useParams } from "react-router-dom";
-// Reusable ItemCard Component
+import { useParams } from "react-router-dom";
 
+import { userAuthStore } from "../../Store/authStore";
 
-const ItemsDetail = ({section,itemArr}) => {
-  // const section =useParams()
-  // const item = {
-  //   name: "SteamMOMO",
-  //   image: "/images/items/momoom.jpg",
-  //   subTags: ["momo", "veggies", "Fast Food"],
-  //   rating: "4.7 (99+)",
-  //   estimatedTime: "30-45 mins",
-  //   veg:true
-  // };
+// const ItemsDetail = ({section,itemArr}) => {
+const ItemsDetail = ({ section }) => {
+  const { fooditem } = useParams()
+  const [itemData, setitemData] = useState([]);
 
-  // const item = {
-  //   name: "SteamMOMO",
-  //   image: "/images/items/momoom.jpg",
-  //   subTags: ["momo", "veggies", "Fast Food"],
-  //   rating: "4.7 (99+)",
-  //   estimatedTime: "30-45 mins",
-  //   veg:true
-  // };
-  // const dataArray = [
-  //   {
-  //     name: "Spicy Chicken Pizza",
-  //     image: "https://example.com/images/spicy-chicken-pizza.jpg",
-  //     subTags: ["Pizza", "Spicy", "Non-Veg"],
-  //     rating: 4.5,
-  //     estimatedTime: "30 mins",
-  //     delivery: "Free Delivery",
-  //     type: "Food",
-  //   },
-  //   {
-  //     name: "Vanilla Ice Cream",
-  //     image: "https://example.com/images/vanilla-ice-cream.jpg",
-  //     subTags: ["Dessert", "Sweet", "Veg"],
-  //     rating: 4.8,
-  //     estimatedTime: "10 mins",
-  //     delivery: "Paid Delivery",
-  //     type: "Dessert",
-  //   },
-  //   {
-  //     name: "Veggie Burger",
-  //     image: "https://example.com/images/veggie-burger.jpg",
-  //     subTags: ["Burger", "Healthy", "Veg"],
-  //     rating: 4.2,
-  //     estimatedTime: "25 mins",
-  //     delivery: "Free Delivery",
-  //     type: "Food",
-  //   },
-  //   {
-  //     name: "Mocha Coffee",
-  //     image: "https://example.com/images/mocha-coffee.jpg",
-  //     subTags: ["Coffee", "Beverage", "Hot"],
-  //     rating: 4.7,
-  //     estimatedTime: "15 mins",
-  //     delivery: "Free Delivery",
-  //     type: "Beverage",
-  //   }
-  // ];
-  
+  const [error, setError] = useState("");
+
+  const { getMomoData ,getChowmeinData,getSoftDrinkDaTa} = userAuthStore()
+  useEffect(() => {
+
+    const fetchData = async () => {
+
+      if(fooditem==="momo"){     
+         const response = await getMomoData();
+         if (response) {
+          setitemData(response.momoArr)
+        }
+        else {
+          setError("Error fetching data")
+        }
+      } 
+      if(fooditem==="chowmein"){
+        const response = await getChowmeinData();
+        if (response) {
+          setitemData(response.chowmeinArr)
+        }
+        else {
+          setError("Error fetching data")
+        }
+      }
+      if(fooditem==="softdrinks"){
+     const response=await getSoftDrinkDaTa();
+     if (response) {
+      setitemData(response.softdrinkArr)
+    }
+    else {
+      setError("Error fetching data")
+    }
+      }
+      // setitemData(responose.momoArr)
+    
+    }
+    fetchData();
+  }, [getMomoData])
+
+  console.log("itemData", itemData)
 
   return (
     <div className="bg-gray-100 text-gray-800 min-h-screen">
-<Navbar/>
+      <Navbar />
 
       {/* Momo Section */}
       <section className="p-4">
-        <h2 className="text-lg font-bold mb-4">{section} Section</h2>
+        <h2 className="text-lg font-bold mb-4">{fooditem} Section</h2>
 
 
-     
+        {error ? <div>{error}</div> : ""}
 
-      {
-        itemArr.map((data,index)=>(
-          <div key={index}>
-            <Link to={`/Items/Purchase/${data.foodLink}/${data.id}`}>   
-          <ItemCard       
-         name={data.name}
-       image={data.backgroundImage}
-       subTags={data.subTags}
-       rating={data.rating}
-       estimatedTime={data.estimatedTime}
-       delivery={data.delivery}
-       type={data.type}  />
-       </Link>
-       </div>    
-           ))
-      }
+        {
+          itemData.map((data, index) => (
+            <div key={index}>
+              <Link to={`/Items/Purchase/${data.foodLink}/${data._id}`}>
+                <ItemCard
+                  name={data.name}
+                  image={data.backgroundImage}
+                  subTags={data.subTags}
+                  rating={data.rating}
+                  estimatedTime={data.estimatedTime}
+                  delivery={data.delivery}
+                  type={data.type} />
+              </Link>
+            </div>
+          ))
+        }
 
-</section>
+      </section>
 
     </div>
   );

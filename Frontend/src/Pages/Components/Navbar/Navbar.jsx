@@ -3,7 +3,7 @@ import { FaUser } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { userAuthStore } from '../../../Store/authStore';
 import { GiHamburgerMenu } from "react-icons/gi";
-import BottomBar from '../BottomBar/BottomBar';
+// import BottomBar from '../BottomBar/BottomBar';
 
 const Navbar = () => {
   const [hambuger, setHamburger] = useState(false);
@@ -32,8 +32,13 @@ const Navbar = () => {
     };
   }, []);
 
-  const { user } = userAuthStore();
+  const { user,logout } = userAuthStore();
 
+
+ const  handleLogout=async()=>{
+   await logout()
+   setHamburger(!hambuger)
+ }
   return (
     <div>    
       <header className="bg-white shadow-md sticky top-0 p-4 text-center">
@@ -76,8 +81,9 @@ const Navbar = () => {
             <ul className="space-y-6 text-xl">
               <li>Home</li>
               <li>About</li>
-              <li>Services</li>
+              <li>Service</li>
               <li>Contact</li>
+              <li onClick={handleLogout}>Log Out</li>
             </ul>
           </div>
         )}
